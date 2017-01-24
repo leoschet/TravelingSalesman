@@ -19,12 +19,13 @@ public class SolverManager extends Thread{
 	}
 
 	public void run(){
-		SingleBobTon.getInstance().spot(this);
 
 		solver = new Solver();
 		try {
 			file = solver.solve(file);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		while(!resultRequested){
 			try {
