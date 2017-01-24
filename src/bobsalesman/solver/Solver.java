@@ -156,8 +156,8 @@ public class Solver {
 		nodes = new Node[DIMENSION];
 		for(int i = 0; i < DIMENSION; i++){
 			int id = input.nextInt();
-			double x = input.nextDouble();
-			double y= input.nextDouble();
+			double x = Double.parseDouble(input.next());
+			double y = Double.parseDouble(input.next());
 			Node node = new Node(x,y,id);
 			nodes[i] = node;
 			input.nextLine();

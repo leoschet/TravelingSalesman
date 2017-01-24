@@ -66,7 +66,7 @@ public class Pair{
 		if(right.left == null) right.left = left;
 		else right.right = left;
 
-		System.out.println("match " + left.id + " - " + right.id+" team>"+left.team);
+		//System.out.println("match " + left.id + " - " + right.id+" team>"+left.team);
 	}
 
 	private void setTeam(Node node, int team) {
