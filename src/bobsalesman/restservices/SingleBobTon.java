@@ -29,7 +29,7 @@ public class SingleBobTon {
 	}
 	
 	public synchronized int getSolverId() {
-		return getIdFromDataBase();
+		return id++;
 	}
 	
 	public SolverManager getSolver(int id){
