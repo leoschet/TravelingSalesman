@@ -12,7 +12,7 @@ public class BobsMarshall {
 		URL url = new URL(input);
 		String filename = FilenameUtils.getBaseName(url.getPath());
 		File file = new File(filename);
-
+		file.deleteOnExit();
 		FileUtils.copyURLToFile(url, file);
 		
 		return file;
