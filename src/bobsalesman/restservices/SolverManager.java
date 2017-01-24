@@ -32,10 +32,8 @@ public class SolverManager extends Thread{
 				sleep(10);
 			} catch (InterruptedException e) {}
 		}
-		try {
-			sleep(10);
-		} catch (InterruptedException e) {}
-
+		SingleBobTon.getInstance().removeSolver(this);
+		
 	}
 	
 	public File getResult(){

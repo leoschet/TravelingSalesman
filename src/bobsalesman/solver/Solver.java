@@ -162,6 +162,6 @@ public class Solver {
 			nodes[i] = node;
 			input.nextLine();
 		}
-
+		file.delete();
 	}
 }
