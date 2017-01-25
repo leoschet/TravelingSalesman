@@ -26,8 +26,8 @@ public class Bob {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/requestRoute")
 	public Response requestBestRoute(String url) throws IOException {
-		File file = bobsMarshall.getFile(url);
-		int id = bobsFunctions.requestBestRoute(file);
+//		File file = bobsMarshall.getFile(url);
+		int id = bobsFunctions.requestBestRoute(url);
 		return Response.ok("{ \"executionID\": " + id + " }", MediaType.APPLICATION_JSON).build();
 	}
 

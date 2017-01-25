@@ -11,16 +11,16 @@ public class Solver {
 
 	public final double TOTAL_PROGRESS = 5;
 	public double progress;
-	
+
 	private void updateProgress(){
 		progress++;
 	}
-	
+
 	public double getProgress(){
 		return progress/TOTAL_PROGRESS;
 	}
-	
-	
+
+
 	private String FILE_NAME = null;
 	private String TYPE = null;
 	private String COMMENT = null;
@@ -29,7 +29,7 @@ public class Solver {
 	private double distance = 0;
 	private Vector<Node> sorted = null;
 	private Vector<Pair> pairs;
-	
+
 	private double distance(Node a, Node b){
 		double distance = (a.x-b.x)*(a.x-b.x);
 		distance += (a.y-b.y)*(a.y-b.y);
@@ -38,7 +38,7 @@ public class Solver {
 	}
 
 	private void generatePairs(Node nodes[]){
-		 pairs = new Vector<Pair>();
+		pairs = new Vector<Pair>();
 		for(int i = 0; i < nodes.length; i++){
 			for(int j = i+1; j <nodes.length; j++){
 				Pair pair = new Pair(nodes[i], nodes[j],distance(nodes[i],nodes[j]));
@@ -76,8 +76,28 @@ public class Solver {
 		}
 	}
 
+	public String solve(String map) throws Exception{
+
+		//STATUS 0
+		updateProgress();
+		read(map);
+		//STATUS 1
+		updateProgress();
+		generatePairs(nodes);
+		//STATUS 2
+		updateProgress();
+		doMatches();
+		//STATUS 3
+		updateProgress();
+		sort();
+		//STATUS 4
+		updateProgress();
+		return printString();
+
+	}
+
 	public File solve(File map) throws Exception{
-		
+
 		//STATUS 0
 		updateProgress();
 		read(map);
@@ -93,14 +113,14 @@ public class Solver {
 		//STATUS 4
 		updateProgress();
 		return printFile();
-		
+
 	}
 	private void sort(){
 		Node first = null;
-	Node next;
-	for(int i =0; i < nodes.length; i++){
-		if(nodes[i].left== null || nodes[i].right == null){ first = nodes[i]; break;}
-	}
+		Node next;
+		for(int i =0; i < nodes.length; i++){
+			if(nodes[i].left== null || nodes[i].right == null){ first = nodes[i]; break;}
+		}
 		if(first.left == null) next = first.right;
 		else next = first.left;
 		sorted = new Vector<Node>();
@@ -133,12 +153,27 @@ public class Solver {
 		for(int i = 0; i < DIMENSION; i++){
 			out.println(sorted.get(i).id);
 		}
-		
+
 		return file;
 	}
 
-	private void read(File file) throws FileNotFoundException {
+	
+	private  String printString() {
+		String out = "FILE: "+ FILE_NAME+
+				"\nCOMMENT: "+ COMMENT + " TOTAL_DISTANCE " + distance+
+				"\nTYPE: "+ TYPE+
+				"\nDIMENSION: "+ DIMENSION+
+				"\nTOUR_SECTION";
+		for(int i = 0; i < DIMENSION; i++){
+			out+=("\n"+sorted.get(i).id);
+		}
 		
+
+		return out;
+	}
+	
+	private void read(File file) throws FileNotFoundException {
+
 		Scanner input = new Scanner(file);
 		input.next();
 		FILE_NAME = input.next();
@@ -150,7 +185,7 @@ public class Solver {
 		DIMENSION = input.nextInt();
 
 		input.nextLine(); // trash
-		
+
 		input.nextLine();
 		input.nextLine();
 		nodes = new Node[DIMENSION];
@@ -163,5 +198,32 @@ public class Solver {
 			input.nextLine();
 		}
 		file.delete();
+	}
+	
+	private void read(String file) throws FileNotFoundException {
+
+		Scanner input = new Scanner(file);
+		input.next();
+		FILE_NAME = input.next();
+		input.next();
+		TYPE = input.next();
+		input.next();
+		COMMENT = input.nextLine();
+		input.next();
+		DIMENSION = input.nextInt();
+
+		input.nextLine(); // trash
+
+		input.nextLine();
+		input.nextLine();
+		nodes = new Node[DIMENSION];
+		for(int i = 0; i < DIMENSION; i++){
+			int id = input.nextInt();
+			double x = Double.parseDouble(input.next());
+			double y = Double.parseDouble(input.next());
+			Node node = new Node(x,y,id);
+			nodes[i] = node;
+			input.nextLine();
+		}
 	}
 }

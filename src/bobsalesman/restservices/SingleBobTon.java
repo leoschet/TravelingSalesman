@@ -7,7 +7,9 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.Region;
 
 public class SingleBobTon {
 
@@ -17,7 +19,7 @@ public class SingleBobTon {
 	private Object monitor;
 	AmazonS3 s3client;
 	AWSCredentials credentials;
-	String bucketName = "TSP";
+	String bucketName = "us-west-2";
 	
 	public static SingleBobTon getInstance(){
 		if(instance == null){
@@ -32,7 +34,6 @@ public class SingleBobTon {
 		this.monitor = new Object();
 		credentials = new BasicAWSCredentials("AKIAJFRF2LVWEVD2WDXQ", "q40kbuz9ivLrEWEfJexi8Ng/c2/bb9RVusE2Ew3q");
 		s3client = new AmazonS3Client(credentials);
-		s3client.createBucket(bucketName);
 	}
 
 

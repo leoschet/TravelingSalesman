@@ -11,6 +11,7 @@ public class SolverManager extends Thread{
 	private volatile boolean resultRequested = false;
 	public int id;
 	private File file;
+	private String filestr;
 	Solver solver;
 	
 	public SolverManager(int id, File file) {
@@ -18,11 +19,16 @@ public class SolverManager extends Thread{
 		this.file = file;
 	}
 
+	public SolverManager(int id, String file) {
+		this.id = id;
+		this.filestr = file;
+	}
+
 	public void run(){
 
 		solver = new Solver();
 		try {
-			file = solver.solve(file);
+			filestr = solver.solve(filestr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,9 +42,9 @@ public class SolverManager extends Thread{
 		
 	}
 	
-	public File getResult(){
+	public String getResult(){
 		resultRequested = true;
-		return file;
+		return filestr;
 	}
 
 }

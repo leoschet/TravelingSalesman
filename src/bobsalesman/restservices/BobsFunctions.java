@@ -16,6 +16,15 @@ public class BobsFunctions {
 		singleton.spot(solver);
 		return id;
 	}
+	
+	public int requestBestRoute(String file) {
+		SingleBobTon singleton = SingleBobTon.getInstance();
+		int id = singleton.getSolverId();
+		SolverManager solver = new SolverManager(id, file);
+		solver.start();
+		singleton.spot(solver);
+		return id;
+	}
 
 	public double getProgress(int id){
 		SingleBobTon singleton = SingleBobTon.getInstance();
@@ -27,14 +36,13 @@ public class BobsFunctions {
 	public String getBestRoute(int id){
 		SingleBobTon singleton = SingleBobTon.getInstance();
 		SolverManager solver = singleton.getSolver(id);
-		File result = solver.getResult();
-		String rawData = "";
-		try {
-			rawData = storeInDataBase(result);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String rawData = solver.getResult();
+//		try {
+////			rawData = storeInDataBase(result);
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		return rawData;
 	}
 
