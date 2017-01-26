@@ -4,28 +4,25 @@ import java.util.Vector;
 
 public class GlobalGreedy extends ProactiveAlgorithm {
 
+	private Vector<Pair> pairs;
+	
 	public GlobalGreedy() {
-		super(4);
+		super(2);
+		pairs = new Vector<Pair>();
 	}
 
 	@Override
-	public Vector<Node> run(Node[] nodes, int dimension) {
-		updateProgress(); // To indicate that the execution has started
+	protected void runSpecific(Node[] nodes, int dimension) {
 		
 		generatePairs(nodes);
 		updateProgress();
 
 		doMatches(dimension); // Part 3
 		updateProgress();
-
-		sort(nodes); // Part 4
-		updateProgress();
-		
-		return sorted;
 	}
 	
 	private void generatePairs(Node nodes[]){
-		pairs = new Vector<Pair>();
+
 		for(int i = 0; i < nodes.length; i++){
 			for(int j = i+1; j <nodes.length; j++){
 				Pair pair = new Pair(nodes[i], nodes[j], distance(nodes[i],nodes[j]));

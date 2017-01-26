@@ -7,15 +7,6 @@ public class Node{
 	Node right;
 	private int id;
 
-	public Node(double x, double y)
-	{
-		this.x = x;
-		this.y = y;
-		this.team = 0;
-		this.left = null;
-		this.right = null;
-
-	}
 	public Node(double x, double y,int id)
 	{
 		this.x = x;

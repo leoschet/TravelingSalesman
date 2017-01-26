@@ -2,6 +2,7 @@ package bobsalesman.algorithms;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Solver {
 
@@ -18,6 +19,9 @@ public class Solver {
 
 		case GLOBAL_GREEDY:
 			algorithm = new GlobalGreedy();
+			break;
+		case LOCAL_GREEDY:
+			algorithm = new LocalGreedy();
 			break;
 		case RANDOM:
 			algorithm = new RandomSalesman();
@@ -36,9 +40,9 @@ public class Solver {
 
 		read(map);
 		
-		algorithm.run(nodes, DIMENSION);
+		Vector<Node> result = algorithm.run(nodes, DIMENSION);
 
-		return printString();
+		return printString(result);
 	}
 
 	private  String printString() {
@@ -52,10 +56,24 @@ public class Solver {
 
 		return out;
 	}
+	
+	private  String printString(Vector<Node> sorted) {
+		String out = "FILE: "+ FILE_NAME+
+				"\nCOMMENT: "+ COMMENT + " TOTAL_DISTANCE " + algorithm.getTotalDistance() +
+				"\nTYPE: "+ TYPE+
+				"\nDIMENSION: "+ DIMENSION+
+				"\nTOUR_SECTION\n";
+		
+		for(int i = 0; i < DIMENSION; i++) {
+			out += (sorted.get(i).getId() + "\n");
+		}
 
-	private void read(String file) throws FileNotFoundException {
+		return out;
+	}
 
-		Scanner input = new Scanner(file);
+	private void read(String rawMap) throws FileNotFoundException {
+
+		Scanner input = new Scanner(rawMap);
 		input.next();
 		FILE_NAME = input.next();
 		input.next();
