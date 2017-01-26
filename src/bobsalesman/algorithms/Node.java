@@ -1,11 +1,11 @@
-package bobsalesman.solver;
+package bobsalesman.algorithms;
 public class Node{
 	double x;
 	double y;
 	int team;
 	Node left;
 	Node right;
-	int id;
+	private int id;
 
 	public Node(double x, double y)
 	{
@@ -23,7 +23,7 @@ public class Node{
 		this.team = 0;
 		this.left = null;
 		this.right = null;
-		this.id = id;
+		this.setId(id);
 
 	}
 
@@ -54,6 +54,12 @@ public class Node{
 	}
 	public void setTeam(int team) {
 		this.team = team;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

@@ -1,4 +1,4 @@
-package bobsalesman.solver;
+package bobsalesman.algorithms;
 
 public class Pair{
 	Node left;
@@ -50,7 +50,7 @@ public class Pair{
 		return false;
 	}
 
-	public void match(int team) throws Exception {
+	public void match(int team) {
 		if(left.team == 0 && right.team == 0){
 			setTeam(left, team);
 			setTeam(right, team);

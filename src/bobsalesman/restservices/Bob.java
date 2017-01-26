@@ -1,6 +1,5 @@
 package bobsalesman.restservices;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.ws.rs.GET;
@@ -10,6 +9,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import bobsalesman.algorithms.ESolversAlgorithm;
 
 @Path("/")
 public class Bob {
@@ -25,9 +26,8 @@ public class Bob {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/requestRoute")
-	public Response requestBestRoute(String url) throws IOException {
-//		File file = bobsMarshall.getFile(url);
-		int id = bobsFunctions.requestBestRoute(url);
+	public Response requestBestRoute(String rawData) throws IOException {
+		int id = bobsFunctions.requestBestRoute(rawData, ESolversAlgorithm.GLOBAL_GREEDY);
 		return Response.ok("{ \"executionID\": " + id + " }", MediaType.APPLICATION_JSON).build();
 	}
 

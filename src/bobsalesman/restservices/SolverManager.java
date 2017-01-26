@@ -1,34 +1,27 @@
 package bobsalesman.restservices;
 
-import java.io.File;
-
-import bobsalesman.solver.Solver;
-
-
+import bobsalesman.algorithms.ESolversAlgorithm;
+import bobsalesman.algorithms.Solver;
 
 public class SolverManager extends Thread{
 
 	private volatile boolean resultRequested = false;
 	public int id;
-	private File file;
-	private String filestr;
+	private String fileRawData;
 	Solver solver;
+	private ESolversAlgorithm approach;
 	
-	public SolverManager(int id, File file) {
+	public SolverManager(int id, String fileRawData, ESolversAlgorithm approach) {
 		this.id = id;
-		this.file = file;
-	}
-
-	public SolverManager(int id, String file) {
-		this.id = id;
-		this.filestr = file;
+		this.fileRawData = fileRawData;
+		this.approach = approach;
 	}
 
 	public void run(){
 
-		solver = new Solver();
+		solver = new Solver(this.approach);
 		try {
-			filestr = solver.solve(filestr);
+			fileRawData = solver.solve(fileRawData);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,7 +37,7 @@ public class SolverManager extends Thread{
 	
 	public String getResult(){
 		resultRequested = true;
-		return filestr;
+		return fileRawData;
 	}
 
 }
