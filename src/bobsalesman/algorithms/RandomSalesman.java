@@ -1,6 +1,5 @@
 package bobsalesman.algorithms;
 
-import java.util.Vector;
 import java.util.Random;
 
 public class RandomSalesman extends ProactiveAlgorithm {
@@ -8,38 +7,32 @@ public class RandomSalesman extends ProactiveAlgorithm {
 	private Random rand;
 	
 	public RandomSalesman() {
-		super(3);
+		super(1);
 		rand = new Random();
 	}
 
 	@Override
-	public Vector<Node> run(Node[] nodes, int dimension) {
-		updateProgress(); // To indicate that the execution has started
-		
-		randomizeConnections(nodes);
+	protected void runSpecific(Node[] nodes, int dimension) {
+		randomizeConnections(nodes, dimension);
 		updateProgress();
-		
-		sort(nodes);
-		updateProgress();
-		return null;
 	}
 
-	private void randomizeConnections(Node[] nodes) {
+	private void randomizeConnections(Node[] nodes, int dimension) {
 		
-		int len = nodes.length;
+		boolean[] usedNodes = new boolean[dimension];
 		
-		boolean[] usedNodes = new boolean[len];
-		
-		int index = rand.nextInt(len);
+		int index = rand.nextInt(dimension);
 		usedNodes[index] = true;
 		
 		int connectionIndex;
-		for (int counter = 0; counter < len;) {
-			connectionIndex = rand.nextInt(len);
+		for (int counter = 0; counter < dimension;) {
+			connectionIndex = rand.nextInt(dimension);
 			
 			if (!usedNodes[connectionIndex]) {
 				nodes[index].right = nodes[connectionIndex];
 				nodes[connectionIndex].left = nodes[index];
+				
+				increaseTotalDistance(distance(nodes[index], nodes[connectionIndex]));
 				
 				usedNodes[connectionIndex] = true;
 				index = connectionIndex;
