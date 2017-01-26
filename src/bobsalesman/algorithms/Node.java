@@ -53,4 +53,12 @@ public class Node{
 		this.id = id;
 	}
 
+	public Node getCopy() {
+		Node copy = new Node(this.x, this.y, this.id);
+		copy.team = this.team;
+		copy.left = this.left;
+		copy.right = this.right;
+		return copy;
+	}
+
 }

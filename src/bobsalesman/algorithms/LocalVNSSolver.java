@@ -5,8 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Vector;
 
-public class Solver {
-
+public class LocalVNSSolver {
 	private String FILE_NAME = null;
 	private String TYPE = null;
 	private String COMMENT = null;
@@ -15,7 +14,7 @@ public class Solver {
 	
 	private ProactiveAlgorithm algorithm;
 
-	public Solver(ESolversAlgorithm approach) {
+	public LocalVNSSolver(ESolversAlgorithm approach) {
 		switch (approach) {
 
 		case GLOBAL_GREEDY:
@@ -38,7 +37,7 @@ public class Solver {
 	}
 	
 	public double getDistance(){
-		return algorithm.getTotalDistance();
+		return algorithm.getUpdatedDistance();
 	}
 
 	public String solve(String map) throws Exception{
@@ -46,17 +45,45 @@ public class Solver {
 		read(map);
 		
 		Vector<Node> result = algorithm.run(nodes, DIMENSION);
-
+		applyLocalVNS(result);
+		
 		return printString(result);
 	}
-	
+
 	public String solve(File map) throws Exception{
 
 		read(map);
 		
 		Vector<Node> result = algorithm.run(nodes, DIMENSION);
+		applyLocalVNS(result);
 
 		return printString(result);
+	}
+	
+	private void applyLocalVNS(Vector<Node> list) {
+		int tries = 0;
+		int maxTry =  2*list.size();
+		for(int index = 0; index < list.size() - 4; index++, tries++) {
+			
+			Node a = list.get(index),
+			b = list.get(index+1),
+			c = list.get(index+2),
+			d = list.get(index+3);
+			
+			double ab = ProactiveAlgorithm.distance(a, b);
+			double ac = ProactiveAlgorithm.distance(a, c);
+			double cd = ProactiveAlgorithm.distance(c, d);
+			double bd = ProactiveAlgorithm.distance(d, b);
+			
+			if(ac+bd<ab+cd){
+				Node temp = b;
+				list.set(index+1, c);
+				list.set(index+2, temp);
+				
+				if(tries< maxTry) index = 0;
+			}
+			
+		}
 	}
 
 	private  String printString(Vector<Node> sorted) {

@@ -18,7 +18,7 @@ public abstract class ProactiveAlgorithm {
 		this.totalDistance = 0;
 	}
 	
-	protected double distance(Node a, Node b){
+	protected static double distance(Node a, Node b){
 		double distance = (a.getX() - b.getX()) * (a.getX() - b.getX());
 		distance += (a.getY() - b.getY()) * (a.getY() - b.getY());
 		distance = Math.sqrt(distance);
@@ -43,6 +43,15 @@ public abstract class ProactiveAlgorithm {
 	
 	public double getTotalDistance() {
 		return totalDistance;
+	}
+	
+	public double getUpdatedDistance() {
+		double totalDist = 0;
+		
+		for(int i =0; i< sorted.size()-1; i++){
+			totalDist+= ProactiveAlgorithm.distance(sorted.get(i), sorted.get(i+1));
+		}
+		return totalDist;
 	}
 	
 	protected void sort(Node[] nodes) {
