@@ -9,12 +9,11 @@ public abstract class ProactiveAlgorithm {
 	private double progress;
 	private double totalDistance;
 	
-	protected Vector<Pair> pairs;
 	protected Vector<Node> sorted;
 	
-	public ProactiveAlgorithm(int totalPhases) {
+	public ProactiveAlgorithm(int specificPhases) {
 		this.sorted = new Vector<Node>();
-		this.totalPhases = totalPhases;
+		this.totalPhases = 2 + specificPhases;
 		this.progress = 0;
 		this.totalDistance = 0;
 	}
@@ -28,6 +27,10 @@ public abstract class ProactiveAlgorithm {
 	
 	protected void updateProgress() {
 		progress += Math.ceil(1/totalPhases);
+	}
+	
+	private void terminateExecution() {
+		progress = 1;
 	}
 	
 	public double getProgress() {
@@ -82,5 +85,15 @@ public abstract class ProactiveAlgorithm {
 		return out;
 	}
 	
-	public abstract Vector<Node> run(Node[] nodes, int dimension);
+	public Vector<Node> run(Node[] nodes, int dimension) {
+		updateProgress(); // To indicate that the execution has started
+		
+		runSpecific(nodes, dimension);
+		
+		sort(nodes);
+		terminateExecution();
+		return sorted;
+	}
+	
+	protected abstract void runSpecific(Node[] nodes, int dimension);
 }
