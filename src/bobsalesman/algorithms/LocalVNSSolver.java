@@ -45,7 +45,10 @@ public class LocalVNSSolver {
 		read(map);
 		
 		Vector<Node> result = algorithm.run(nodes, DIMENSION);
+		
+		System.out.println("Before VNS: " + getDistance());
 		applyLocalVNS(result);
+		System.out.println("After VNS: " + getDistance());
 		
 		return printString(result);
 	}
@@ -55,8 +58,11 @@ public class LocalVNSSolver {
 		read(map);
 		
 		Vector<Node> result = algorithm.run(nodes, DIMENSION);
+		
+		System.out.println("Before VNS: " + getDistance());
 		applyLocalVNS(result);
-
+		System.out.println("After VNS: " + getDistance());
+		
 		return printString(result);
 	}
 	
@@ -80,7 +86,7 @@ public class LocalVNSSolver {
 				list.set(index+1, c);
 				list.set(index+2, temp);
 				
-				if(tries< maxTry) index = 0;
+				if(tries < maxTry) index = 0;
 			}
 			
 		}

@@ -9,6 +9,7 @@ public class LocalGreedy extends ProactiveAlgorithm {
 	
 	public LocalGreedy() {
 		super(1);
+		rand = new Random();
 	}
 
 	@Override
@@ -29,19 +30,19 @@ public class LocalGreedy extends ProactiveAlgorithm {
 			curPairs = getNodePairs(nodes, index, dimension);
 			
 			matched = false;
-			while(!matched || curPairs.size() != 0) {
+			while(!matched && curPairs.size() != 0) {
 				Pair pair = curPairs.remove(0);
-				int candidateID = pair.getRight().getId();
+				int candidateIndex = pair.getRight().getId() - 1;
 				
-				if ( !usedNodes[candidateID] ) {
-					nodes[index].right = nodes[candidateID];
-					nodes[candidateID].left = nodes[index];
+				if ( !usedNodes[candidateIndex] ) {
+					nodes[index].right = nodes[candidateIndex];
+					nodes[candidateIndex].left = nodes[index];
 					
-					increaseTotalDistance(distance(nodes[index], nodes[candidateID]));
+					increaseTotalDistance(distance(nodes[index], nodes[candidateIndex]));
 					
-					usedNodes[candidateID] = true;
+					usedNodes[candidateIndex] = true;
 					matched = true;
-					index = candidateID;
+					index = candidateIndex;
 				}
 			}
 		}

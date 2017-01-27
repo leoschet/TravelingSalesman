@@ -14,9 +14,10 @@ public class GlobalGreedy extends ProactiveAlgorithm {
 	@Override
 	protected void runSpecific(Node[] nodes, int dimension) {
 		
+		System.out.println("starting");
 		generatePairs(nodes);
 		updateProgress();
-
+		System.out.println("matching pairs");
 		doMatches(dimension); // Part 3
 		updateProgress();
 	}
@@ -29,7 +30,9 @@ public class GlobalGreedy extends ProactiveAlgorithm {
 
 				pairs.add(pair);
 			}
+			
 		}
+		System.out.println("end of pairs");
 		sort(pairs);
 	}
 
