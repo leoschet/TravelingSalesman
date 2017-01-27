@@ -49,8 +49,9 @@ public abstract class ProactiveAlgorithm {
 		double totalDist = 0;
 		
 		for(int i =0; i< sorted.size()-1; i++){
-			totalDist+= ProactiveAlgorithm.distance(sorted.get(i), sorted.get(i+1));
+			totalDist+= distance(sorted.get(i), sorted.get(i+1));
 		}
+		totalDist+= distance(sorted.get(0), sorted.get(sorted.size()));
 		return totalDist;
 	}
 	
